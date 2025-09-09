@@ -3,6 +3,9 @@ from utils import welcome
 from colorama import Fore
 import os
 
+#Import modules
+from tools.domains import ui
+
 os.system('clear')
 
 welcome()
@@ -31,3 +34,6 @@ while True:
     if res == 0:
         print(Fore.CYAN + "Bye, see you soon." + Fore.RESET)
         sys.exit()
+    
+    if res == 1:
+        ui.start()
