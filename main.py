@@ -4,7 +4,8 @@ from colorama import Fore
 import os
 
 #Import modules
-from tools.domains import ui
+from tools.domains import ui as domains_ui
+import tools.databases.ui as db_ui
 
 os.system('clear')
 
@@ -36,4 +37,6 @@ while True:
         sys.exit()
     
     if res == 1:
-        ui.start()
+        domains_ui.start()
+    elif res == 2:
+        db_ui.start()

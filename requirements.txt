@@ -2,3 +2,4 @@ colorama
 textual
 python-whois
 cryptography
+psycopg2-binary

@@ -48,3 +48,6 @@ def addDomain(domain):
         return False, "Domain is not verified. Please make sure to verify your domain."
 
     return True, "Domain added successfully."
+
+def removeDomain(domain):
+    os.system(f'nest caddy rm {domain}')

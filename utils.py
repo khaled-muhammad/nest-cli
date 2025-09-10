@@ -1,3 +1,4 @@
+import os
 from colorama import Fore
 
 def welcome():
@@ -8,3 +9,6 @@ def welcome():
 ██║ ╚████║███████╗███████║   ██║       ╚██████╗███████╗██║
 ╚═╝  ╚═══╝╚══════╝╚══════╝   ╚═╝        ╚═════╝╚══════╝╚═╝""" + Fore.RESET)
     print("\n")
+
+
+username = os.popen("whoami").read().strip()

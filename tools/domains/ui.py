@@ -1,7 +1,8 @@
 import sys
 from colorama import Fore
 import os
-from .management import addDomain, listDomains
+from .management import addDomain, listDomains, removeDomain
+from utils import username
 
 def start():
     while True:
@@ -58,12 +59,16 @@ def start():
             if not success:
                 print(Fore.RED + message + Fore.RESET)
                 from .templates import domain_connection_guide_styled
-                username = os.popen("whoami").read().strip()
                 print(domain_connection_guide_styled.replace("<username>", username))
             else:
                 print(f"Adding domain: {domain}")
                 print(Fore.GREEN + message + Fore.RESET)
         elif res == 3:
-            domain = input("Enter the domain to remove: ")
+            print(Fore.YELLOW + "\nListing Domains...\n" + Fore.RESET)
+            domain_list = listDomains()
+            for i, domain in enumerate(domain_list):
+                print(f"   {i + 1}. {domain.name}")
+
+            domain = input("\nEnter the domain to remove: ")
             print(f"Removing domain: {domain}")
-            # Placeholder for actual domain removing logic
+            removeDomain(domain)
