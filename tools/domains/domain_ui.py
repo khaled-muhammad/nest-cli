@@ -2,6 +2,8 @@ import os
 
 from colorama import Fore
 from .models import Domain
+from .management import getSSLInfo
+from datetime import datetime, timezone
 import whois
 
 
@@ -31,26 +33,38 @@ def start(domain:Domain):
         if res == 1:
             print(Fore.YELLOW + f"\nDomain Details for {domain.name}:\n" + Fore.RESET)
             print(f"   Name: {domain.name}")
-            print(f"   Created At: {domain.created_at}")
-            print(f"   Updated At: {domain.updated_at}")
-            input("\nPress Enter to continue...")
-        
+            print(f"   Socket: {domain.sock_path}")
+            if ".hackclub.app" in domain.name:
+                print(Fore.RED + "   Note: This is a Hack Club's Nest subdomain. So no useful details about it." + Fore.RESET)
+            else:
+                domain_lookup = whois.whois(domain.name)
+                print("   Registeration Date:", domain_lookup.creation_date)
+                print("   Expiration Date:", domain_lookup.expiration_date)
+                print("   Registrar:", domain_lookup.registrar)
+                print("   Name Servers:")
+                for ns in domain_lookup.name_servers:
+                    print("    -", ns)
+
         elif res == 2:
-            new_name = input("Enter new domain name: ")
-            print(f"Updating domain from {domain.name} to {new_name}")
-            # Placeholder for actual update logic
-            domain.name = new_name
-            print(Fore.GREEN + "Domain updated successfully!" + Fore.RESET)
+            print(Fore.YELLOW + f"\nSSL Details for {domain.name}:\n" + Fore.RESET)
+            try:
+                ssl_info = getSSLInfo(domain.name)
+                print(f"   Subject: {ssl_info.subject}")
+                print(f"   Issuer: {ssl_info.issuer}")
+                print(f"   Issued On: {ssl_info.issued}")
+                print(f"   Expiry Date: {ssl_info.expiry}")
+                if ssl_info.expiry < datetime.now(timezone.utc):
+                    print(Fore.RED + "   Status: Expired" + Fore.RESET)
+                else:
+                    print(Fore.GREEN + "   Status: Valid" + Fore.RESET)
+            except Exception as e:
+                print(Fore.RED + f"   Failed to retrieve SSL info: {e}" + Fore.RESET)
         
         elif res == 3:
             confirm = input(f"Are you sure you want to delete the domain {domain.name}? (yes/no): ")
             if confirm.lower() == 'yes':
                 print(f"Deleting domain: {domain.name}")
-                # Placeholder for actual delete logic
-                print(Fore.GREEN + "Domain deleted successfully!" + Fore.RESET)
-                os.system('clear')
-                import ui
-                ui.start()
+                os.system(f'nest caddy rm {domain.name}')
             else:
                 print(Fore.YELLOW + "Domain deletion cancelled." + Fore.RESET)
         

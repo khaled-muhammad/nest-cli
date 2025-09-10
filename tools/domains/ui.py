@@ -1,7 +1,7 @@
 import sys
 from colorama import Fore
 import os
-from .management import listDomains
+from .management import addDomain, listDomains
 
 def start():
     while True:
@@ -53,8 +53,16 @@ def start():
             input("Press Enter to continue...")
         elif res == 2:
             domain = input("Enter the domain to add: ")
-            print(f"Adding domain: {domain}")
-            # Placeholder for actual domain adding logic
+            print("Checking if eligible for adding first ...")
+            success, message = addDomain(domain)
+            if not success:
+                print(Fore.RED + message + Fore.RESET)
+                from .templates import domain_connection_guide_styled
+                username = os.popen("whoami").read().strip()
+                print(domain_connection_guide_styled.replace("<username>", username))
+            else:
+                print(f"Adding domain: {domain}")
+                print(Fore.GREEN + message + Fore.RESET)
         elif res == 3:
             domain = input("Enter the domain to remove: ")
             print(f"Removing domain: {domain}")
