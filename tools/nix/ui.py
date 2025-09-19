@@ -96,3 +96,21 @@ def start():
         
         if res == 8:
             flake_ui.start()
+        if res == 9:
+            print(Fore.CYAN + "Nix Garbage Collect / Store Cleanup" + Fore.RESET)
+            print("-------------------------------------")
+            try:
+                choice = input(Fore.CYAN + "Optimise store as well? (Y/n): " + Fore.RESET).strip().lower()
+                optimise = not (choice == 'n')
+                garbageCollect(delete_old=True, optimise_store=optimise)
+            except Exception as e:
+                print(Fore.RED + f"Error during GC: {e}" + Fore.RESET)
+            questionary.press_any_key_to_continue().ask()
+        if res == 10:
+            print(Fore.CYAN + "Nix Doctor / Health Check" + Fore.RESET)
+            print("---------------------------")
+            try:
+                checkNixHealth()
+            except Exception as e:
+                print(Fore.RED + f"Error while checking health: {e}" + Fore.RESET)
+            questionary.press_any_key_to_continue().ask()
