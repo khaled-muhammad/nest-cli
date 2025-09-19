@@ -3,3 +3,4 @@ python-whois
 cryptography
 psycopg2-binary
 questionary
+requests
