@@ -6,6 +6,7 @@ import os
 #Import modules
 from tools.domains import ui as domains_ui
 import tools.databases.ui as db_ui
+from tools.caddy import ui as caddy_ui
 
 os.system('clear')
 
@@ -40,3 +41,5 @@ while True:
         domains_ui.start()
     elif res == 2:
         db_ui.start()
+    elif res == 3:
+        caddy_ui.start()

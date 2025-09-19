@@ -25,7 +25,6 @@ def start():
         if res == 0:
             os.system('clear')
             import main
-            sys.exit()
         
         if res == 1:
             print(Fore.YELLOW + "\nListing Databases...\n" + Fore.RESET)
