@@ -111,6 +111,11 @@ class AIAssistant:
             },
             
             # Database Management
+            "create_database": {
+                "function": db_mgmt.create_db,
+                "description": "Create new databases",
+                "args": ['db_name']
+            },
             "list_databases": {
                 "function": db_mgmt.list_user_databases,
                 "description": "List user databases",

@@ -1,5 +1,9 @@
 import psycopg2
 from utils import username
+import os
+
+def create_db(db_name):
+    os.system(f'nest db create {db_name}')
 
 def list_user_databases():
     conn = psycopg2.connect(

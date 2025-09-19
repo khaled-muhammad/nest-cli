@@ -1,7 +1,7 @@
 import os
 import sys
 from colorama import Fore
-from .management import list_user_databases, remove_database
+from .management import list_user_databases, remove_database, create_db
 
 
 def start():
@@ -39,7 +39,7 @@ def start():
         if res == 2:
             db_name = input("Enter the name for the new database: ")
             print(f"Creating database: {db_name}")
-            os.system(f'nest db create {db_name}')
+            create_db(db_name)
             input("Press Enter to continue...")
         
         if res == 3:
