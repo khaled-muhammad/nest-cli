@@ -1,8 +1,8 @@
 from .models import CaddyFile, SiteBlock, Directive
 
 def listSites():
-    # caddy = CaddyFile.parse('~/Caddyfile')
-    caddy = CaddyFile.parse('/home/khaled/nest-cli/CaddyfileTest')
+    caddy = CaddyFile.parse('~/Caddyfile')
+    # caddy = CaddyFile.parse('/home/khaled/nest-cli/CaddyfileTest')
 
     return caddy.sites
 
@@ -32,19 +32,19 @@ def addStaticRoute(site:SiteBlock, route_path, path):
     return site
 
 def saveUpdatedSite(site:SiteBlock):
-    # caddy = CaddyFile.parse('~/Caddyfile')
-    caddy = CaddyFile.parse('/home/khaled/nest-cli/CaddyfileTest')
+    caddy = CaddyFile.parse('~/Caddyfile')
+    # caddy = CaddyFile.parse('/home/khaled/nest-cli/CaddyfileTest')
 
     caddy.sites[site.domain] = site
 
-    # caddy.save('~/Caddyfile')
-    caddy.save('/home/khaled/nest-cli/CaddyfileTest')
+    caddy.save('~/Caddyfile')
+    # caddy.save('/home/khaled/nest-cli/CaddyfileTest')
 
 def deleteSite(site:SiteBlock):
-    # caddy = CaddyFile.parse('~/Caddyfile')
-    caddy = CaddyFile.parse('/home/khaled/nest-cli/CaddyfileTest')
+    caddy = CaddyFile.parse('~/Caddyfile')
+    # caddy = CaddyFile.parse('/home/khaled/nest-cli/CaddyfileTest')
 
     del caddy.sites[site.domain]
 
-    # caddy.save('~/Caddyfile')
-    caddy.save('/home/khaled/nest-cli/CaddyfileTest')
+    caddy.save('~/Caddyfile')
+    # caddy.save('/home/khaled/nest-cli/CaddyfileTest')
