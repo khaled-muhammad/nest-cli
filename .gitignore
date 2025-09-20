@@ -11,3 +11,5 @@ venv/
 
 # Environment variables
 .env
+
+build/
