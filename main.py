@@ -1,3 +1,9 @@
+# Import runtime patches first (for PyInstaller)
+try:
+    import runtime_patch
+except ImportError:
+    pass
+
 import sys
 from utils import welcome
 from colorama import Fore

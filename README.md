@@ -19,20 +19,47 @@ A powerful command-line interface for managing development infrastructure and se
 ## 🚀 Quick Start
 
 ### Installation
+
+#### Option 1: From Source
 ```bash
 # Clone the repository
-git clone <repository-url>
-cd nest_cli
+git clone https://github.com/khaled-muhammad/nest-cli
+cd nest-cli
 
 # Create virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
 
 # Run the CLI
 python main.py
+```
+
+#### Option 2: Binary (Linux Only)
+```bash
+# Download and extract
+wget https://github.com/khaled-muhammad/nest-cli/releases/latest/download/nest-cli-linux.tar.gz
+tar -xzf nest-cli-linux.tar.gz
+cd nest-cli-package
+
+# Install system-wide
+sudo ./install.sh
+
+# Or run directly
+./nest-cli
+```
+
+#### Option 3: Build from Source
+```bash
+# Clone and build
+git clone https://github.com/khaled-muhammad/nest-cli
+cd nest-cli
+./build.sh
+
+# Install the binary
+sudo cp dist/nest-cli /usr/local/bin/
 ```
 
 ### First Run
@@ -272,6 +299,33 @@ cryptography>=41.0.0
 :check ssl for all domains
 ```
 
+## 🏗️ Building
+
+### Build Binary (Linux)
+```bash
+# Quick build
+./build.sh
+
+# Or using Python build script
+python build.py
+
+# Or using Makefile
+make build
+```
+
+### Build Options
+- **Simple**: `./build.sh` - Quick single-file build
+- **Advanced**: `python build.py` - Full build with environment handling
+- **Make**: `make build` - Build with dependency checking
+
+### Distribution Package
+```bash
+# Create distribution package
+make package
+
+# This creates: dist/nest-cli-linux.tar.gz
+```
+
 ## 🤝 Contributing
 
 ### Development Setup
@@ -279,8 +333,8 @@ cryptography>=41.0.0
 # Install development dependencies
 pip install -r requirements.txt
 
-# Run with debug output
-python main.py --debug
+# Run in development mode
+make dev
 
 # Test AI assistant
 python -c "from ai import ai_assistant; ai_assistant.process_command('list my packages')"
