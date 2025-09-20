@@ -83,7 +83,7 @@ class CaddyFile:
         return "\n".join(output).strip()
 
     def save(self, path: str | Path):
-        Path(path).write_text(self.render(), encoding="utf-8")
+        Path(os.path.expanduser(path)).write_text(self.render(), encoding="utf-8")
 
     @staticmethod
     def parse(path) -> 'CaddyFile':
