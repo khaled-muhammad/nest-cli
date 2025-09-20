@@ -18,10 +18,16 @@ rm -rf dist/ build/ *.spec
 
 # Build with PyInstaller
 echo "📦 Building binary..."
+
+# Get whois data file path
+WHOIS_DATA_PATH=$(python -c "import whois, os; print(os.path.join(os.path.dirname(whois.__file__), 'data', 'public_suffix_list.dat'))")
+echo "📄 Including whois data from: $WHOIS_DATA_PATH"
+
 pyinstaller \
     --onefile \
     --name=nest-cli \
     --add-data="tools:tools" \
+    --add-data="$WHOIS_DATA_PATH:whois/data" \
     --hidden-import=runtime_patch \
     --hidden-import=tools.nix.management \
     --hidden-import=tools.domains.management \
@@ -35,6 +41,8 @@ pyinstaller \
     --hidden-import=questionary \
     --hidden-import=psycopg2 \
     --hidden-import=cryptography \
+    --hidden-import=whois \
+    --hidden-import=whois.parser \
     main.py
 
 echo "✅ Build complete!"

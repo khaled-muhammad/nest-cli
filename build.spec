@@ -8,6 +8,7 @@ a = Analysis(
     binaries=[],
     datas=[
         ('tools', 'tools'),  # Include all tool modules
+        ('./venv/lib/python3.12/site-packages/whois/data/public_suffix_list.dat', 'whois/data'),  # Whois data
     ],
     hiddenimports=[
         'tools.nix.management',
@@ -34,6 +35,8 @@ a = Analysis(
         'questionary',
         'psycopg2',
         'cryptography',
+        'whois',
+        'whois.parser',
         'json',
         'subprocess',
         'pathlib',

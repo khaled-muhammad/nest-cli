@@ -175,6 +175,16 @@ def build_binary():
     # Create the patch file
     patch_subprocess_calls()
     
+    # Get whois data file path
+    try:
+        import whois
+        whois_path = os.path.dirname(whois.__file__)
+        whois_data_file = os.path.join(whois_path, 'data', 'public_suffix_list.dat')
+        print(f"📄 Including whois data from: {whois_data_file}")
+    except ImportError:
+        whois_data_file = None
+        print("⚠️  Warning: whois package not found, domain whois lookup may not work")
+    
     # Build command
     cmd = [
         'pyinstaller',
@@ -197,9 +207,15 @@ def build_binary():
         '--hidden-import=questionary',
         '--hidden-import=psycopg2',
         '--hidden-import=cryptography',
+        '--hidden-import=whois',
+        '--hidden-import=whois.parser',
         '--additional-hooks-dir=.',
         'main.py'
     ]
+    
+    # Add whois data if available
+    if whois_data_file and os.path.exists(whois_data_file):
+        cmd.insert(-1, f'--add-data={whois_data_file}:whois/data')
     
     try:
         result = subprocess.run(cmd, check=True, capture_output=True, text=True)

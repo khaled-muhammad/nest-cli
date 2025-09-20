@@ -1,10 +1,37 @@
 import os
+import sys
 
 from colorama import Fore
 from .models import Domain
 from .management import getSSLInfo
 from datetime import datetime, timezone
 import whois
+
+# Fix whois data file path for PyInstaller
+def setup_whois_data():
+    """Setup whois data file path for PyInstaller compatibility"""
+    try:
+        if getattr(sys, 'frozen', False):
+            # Running in PyInstaller bundle
+            base_path = sys._MEIPASS
+            whois_data_file = os.path.join(base_path, 'whois', 'data', 'public_suffix_list.dat')
+            
+            # Check if the file exists and set it
+            if os.path.exists(whois_data_file):
+                whois.PSL_FILE = whois_data_file
+            else:
+                # Fallback: try to find it in the whois package
+                import whois as whois_pkg
+                whois_pkg_path = os.path.dirname(whois_pkg.__file__)
+                fallback_file = os.path.join(whois_pkg_path, 'data', 'public_suffix_list.dat')
+                if os.path.exists(fallback_file):
+                    whois.PSL_FILE = fallback_file
+    except Exception as e:
+        # If anything fails, whois will use its default behavior
+        pass
+
+# Initialize whois data path
+setup_whois_data()
 
 
 def start(domain:Domain):
